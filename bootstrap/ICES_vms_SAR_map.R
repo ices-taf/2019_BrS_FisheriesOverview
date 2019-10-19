@@ -1,8 +1,7 @@
 
 taf.library("icesVMS")
 
-# icesVMS::update_token("colin")
-vms_sar <- icesVMS::get_sar_map("Barents Sea")
+vms_sar <- icesVMS::get_sar_map("Barents Sea", year = 2017)
 
 # convert to sf
 vms_sar$wkt <- sf::st_as_sfc(vms_sar$wkt)
