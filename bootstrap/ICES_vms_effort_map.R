@@ -2,8 +2,7 @@
 
 taf.library("icesVMS")
 
-# icesVMS::update_token("colin")
-vms_effort <- icesVMS::get_effort_map("Barents Sea")
+vms_effort <- icesVMS::get_effort_map("Barents Sea", year = 2017)
 
 # convert to sf
 vms_effort$wkt <- sf::st_as_sfc(vms_effort$wkt)
