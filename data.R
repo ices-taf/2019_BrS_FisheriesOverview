@@ -64,4 +64,4 @@ clean_sag<-clean_sag%>%filter(StockKeyLabel %in% Barents_stockList)
 clean_status<-clean_status%>%filter(StockKeyLabel %in% Barents_stockList)
                   
 write.taf(clean_sag, dir = "data")
-write.taf(clean_status, dir = "data")
+write.taf(clean_status, dir = "data", quote = TRUE)

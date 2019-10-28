@@ -21,6 +21,8 @@ catch_trends <- read.taf("model/catch_trends.csv")
 #error with number of columns, to check
 clean_status <- read.taf("data/clean_status.csv")
 
+effort_dat <- read.taf("bootstrap/data/ICES_vms_effort_data/ICES_vms_effort_data.csv")
+landings_dat <- read.taf("bootstrap/data/ICES_vms_landings_data/ICES_vms_landings_data.csv")
 
 ices_areas <- 
   sf::st_read("bootstrap/data/ICES_areas/areas.csv", 
@@ -141,6 +143,11 @@ write.taf(dat, file ="2019_BrS_FO_Figure12a.csv", dir = "report" )
 #~~~~~~~~~~~
 bar <- plot_CLD_bar(catch_current, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 
+#remove ele
+
+catch_current2 <- catch_current %>% filter(StockKeyLabel != "ele.2737.nea")
+bar <- plot_CLD_bar(catch_current2, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
+
 bar_dat <- plot_CLD_bar(catch_current, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(bar_dat, file ="2019_BrS_FO_Figure13_demersal.csv", dir = "report" )
 
@@ -220,16 +227,23 @@ dev.off()
 #~~~~~~~~~~~~~~~#
 discardsA <- plot_discard_trends(catch_trends, 2019, cap_year = 2019, cap_month = "October")
 
-dat <- plot_discard_trends(catch_trends, 2019, cap_year = 2019, cap_month = "October", return_data = TRUE)
+# Most discards are of spurdog, which was not assessed in 2019,
+# will plot only elasmobranchs up to 2018
+
+catch_trends2 <- catch_trends %>% filter(FisheriesGuild == "elasmobranch")
+discardsA <- plot_discard_trends(catch_trends2, 2019, cap_year = 2019, cap_month = "October")
+
+dat <- plot_discard_trends(catch_trends2, 2019, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(dat, file ="2019_BrS_FO_Figure7_trends.csv", dir = "report" )
 
 discardsB <- plot_discard_current(catch_trends, 2019, cap_year = 2019, cap_month = "October")
+# nothing comes out here, because no spurdog assessment
 
 dat <- discardsB <- plot_discard_current(catch_trends, 2019, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(dat, file ="2019_BrS_FO_Figure7_current.csv", dir = "report" )
 
 png("report/019_BrS_FO_Figure7.png",
-    width = 131.32,
+    width = 137.32,
     height = 88.9,
     units = "mm",
     res = 300)
@@ -304,7 +318,7 @@ plot_effort_map(effort, ecoregion) +
 ggplot2::ggsave("2019_BrS_FO_Figure9.png", path = "report", width = 170, height = 200, units = "mm", dpi = 300)
 
 #~~~~~~~~~~~~~~~#
-# A. Swept area map
+# B. Swept area map
 #~~~~~~~~~~~~~~~#
 
 plot_sar_map(sar, ecoregion, what = "surface") + 
@@ -317,5 +331,12 @@ plot_sar_map(sar, ecoregion, what = "subsurface")+
 
 ggplot2::ggsave("2019_BrS_FO_Figure17b.png", path = "report", width = 170, height = 200, units = "mm", dpi = 300)
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# C. Effort and landings plots
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+plot_vms(effort_dat, metric = "country", type = "effort", cap_year= 2019, cap_month= "October", line_count= 6)
+ggplot2::ggsave("2019_BrS_FO_Figure3.png", path = "report/", width = 178, height = 130, units = "mm", dpi = 300)
 
+plot_vms(landings_dat, metric = "gear_category", type = "landings", cap_year= 2019, cap_month= "October", line_count= 5)
+ggplot2::ggsave("2019_BrS_FO_Figure6.png", path = "report/", width = 178, height = 130, units = "mm", dpi = 300)
