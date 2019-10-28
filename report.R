@@ -59,7 +59,7 @@ ggplot2::ggsave("2019_BrS_FO_Figure1.png", path = "report", width = 170, height 
 # By common name
 #~~~~~~~~~~~~~~~#
 #Plot
-plot_catch_trends(catch_dat, type = "COMMON_NAME", line_count = 7, plot_type = "line")
+plot_catch_trends(catch_dat, type = "COMMON_NAME", line_count = 5, plot_type = "line")
 ggplot2::ggsave("2019_BrS_FO_Figure5.png", path = "report/", width = 170, height = 100.5, units = "mm", dpi = 300)
 
 #data
@@ -89,8 +89,8 @@ plot_catch_trends(catch_dat, type = "GUILD", line_count = 5, plot_type = "line")
 check <- catch_dat %>% filter (GUILD == "undefined")
 unique(check$COMMON_NAME)
 catch_dat$GUILD[which(catch_dat$COMMON_NAME == "Polar cod")] <- "Demersal"
-# Redfishes of Sebastes spp can be in different guilds, so I can't attribute it
-# catch_dat$GUILD[which(catch_dat$COMMON_NAME == "Atlantic redfishes nei")] <- ""
+# Redfishes of Sebastes spp attributed to pelagic
+catch_dat$GUILD[which(catch_dat$COMMON_NAME == "Atlantic redfishes nei")] <- "Pelagic"
 
 plot_catch_trends(catch_dat, type = "GUILD", line_count = 3, plot_type = "line")
 ggplot2::ggsave("2019_BrS_FO_Figure4.png", path = "report/", width = 178, height = 130, units = "mm", dpi = 300)

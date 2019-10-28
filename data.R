@@ -20,6 +20,19 @@ catch_dat <-
   format_catches(2019, "Barents Sea", 
     hist, official, prelim, species_list, sid)
 
+
+out <-unique(grep("erring", catch_dat$COMMON_NAME, value = TRUE))
+#[1] "Pacific herring"  "Atlantic herring"
+out2<-unique(grep("ackerel", catch_dat$COMMON_NAME, value = TRUE))
+out3<-unique(grep("lue whiting", catch_dat$COMMON_NAME, value = TRUE))
+out <- append(out, out2)
+out <- append(out, out3)
+
+library(operators)
+catch_dat <- dplyr::filter(catch_dat, COMMON_NAME %!in% out)
+detach("package:operators", unload=TRUE)
+
+
 write.taf(catch_dat, dir = "data", quote = TRUE)
 
 # 2: SAG
