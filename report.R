@@ -207,12 +207,16 @@ dev.off()
 #~~~~~~~~~~~
 bar <- plot_CLD_bar(catch_current, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 
+#remove ele
+catch_current2 <- catch_current %>% filter(StockKeyLabel != "ele.2737.nea")
+bar <- plot_CLD_bar(catch_current2, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
+
 bar_dat <- plot_CLD_bar(catch_current, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(bar_dat, file ="2019_BrS_FO_Figure13_All.csv", dir = "report" )
 
 kobe <- plot_kobe(catch_current, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 png("report/019_BrS_FO_Figure13_All.png",
-    width = 131.32,
+    width = 137.32,
     height = 88.9,
     units = "mm",
     res = 300)
