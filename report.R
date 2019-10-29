@@ -208,8 +208,8 @@ dev.off()
 bar <- plot_CLD_bar(catch_current, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 
 #remove ele
-catch_current2 <- catch_current %>% filter(StockKeyLabel != "ele.2737.nea")
-bar <- plot_CLD_bar(catch_current2, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
+# catch_current2 <- catch_current %>% filter(StockKeyLabel != "ele.2737.nea")
+# bar <- plot_CLD_bar(catch_current2, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 
 bar_dat <- plot_CLD_bar(catch_current, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(bar_dat, file ="2019_BrS_FO_Figure13_All.csv", dir = "report" )
@@ -269,8 +269,6 @@ write.taf(dat, file= "2019_BrS_FO_Figure10.csv", dir = "report")
 #~~~~~~~~~~~~~~~#
 #E. GES pies
 #~~~~~~~~~~~~~~~#
-if (FASE) { # these are failing
-        
         #Need to change order and fix numbers
         plot_GES_pies(clean_status, catch_current, "October", "2019")
         ggplot2::ggsave("2019_BrS_FO_Figure11.png", path = "report/", width = 178, height = 178, units = "mm", dpi = 300)
@@ -291,7 +289,6 @@ if (FASE) { # these are failing
         
         # dat <- format_annex_table(clean_status, 2019, return_data = TRUE)
         
-}
 
 
 ###########
@@ -340,7 +337,29 @@ ggplot2::ggsave("2019_BrS_FO_Figure17b.png", path = "report", width = 170, heigh
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 plot_vms(effort_dat, metric = "country", type = "effort", cap_year= 2019, cap_month= "October", line_count= 6)
+effort_dat$kw_fishing_hours <- effort_dat$kw_fishing_hours/1000
+effort_dat <- effort_dat %>% dplyr::mutate(country = dplyr::recode(country,
+              NO = "Norway",
+              EST = "Estonia",
+              GBR = "United Kingdom",
+              DEU = "Germany",
+              FRA = "France",
+              ICE = "Iceland"))
+plot_vms(effort_dat, metric = "country", type = "effort", cap_year= 2019, cap_month= "October", line_count= 6)
 ggplot2::ggsave("2019_BrS_FO_Figure3.png", path = "report/", width = 178, height = 130, units = "mm", dpi = 300)
 
-plot_vms(landings_dat, metric = "gear_category", type = "landings", cap_year= 2019, cap_month= "October", line_count= 5)
+plot_vms(landings_dat, metric = "gear_category", type = "landings", cap_year= 2019, cap_month= "October", line_count= 4)
+landings_dat$totweight <- landings_dat$totweight/1000000
+landings_dat <- landings_dat %>% dplyr::mutate(gear_category = 
+                dplyr::recode(gear_category,
+                              Static = "Static gears",
+                              Midwater = "Pelagic trawls and seines",
+                              Otter = "Bottom otter trawls",
+                              `Demersal seine` = "Bottom seines",
+                              Dredge = "Dredges",
+                              Beam = "Beam trawls",
+                              'NA' = "Undefined"))
+
+plot_vms(landings_dat, metric = "gear_category", type = "landings", cap_year= 2019, cap_month= "October", line_count= 4)
+
 ggplot2::ggsave("2019_BrS_FO_Figure6.png", path = "report/", width = 178, height = 130, units = "mm", dpi = 300)
