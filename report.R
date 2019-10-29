@@ -143,11 +143,10 @@ write.taf(dat, file ="2019_BrS_FO_Figure12a.csv", dir = "report" )
 #~~~~~~~~~~~
 bar <- plot_CLD_bar(catch_current, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 
-#remove ele
+# Cod.27.1-2 should be green according to official status
+catch_current$Status[which(catch_current$StockKeyLabel == "cod.27.1-2")] <- "GREEN"
 
-catch_current2 <- catch_current %>% filter(StockKeyLabel != "ele.2737.nea")
-bar <- plot_CLD_bar(catch_current2, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
-
+bar <- plot_CLD_bar(catch_current, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 bar_dat <- plot_CLD_bar(catch_current, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(bar_dat, file ="2019_BrS_FO_Figure13_demersal.csv", dir = "report" )
 
@@ -199,7 +198,7 @@ png("report/2019_BrS_FO_Figure13_crustacean.png",
     res = 300)
 p1_plot<-gridExtra::grid.arrange(kobe,
                                  bar, ncol = 2,
-                                 respect = TRUE, top = "benthic")
+                                 respect = TRUE, top = "crustacean")
 dev.off()
 
 
