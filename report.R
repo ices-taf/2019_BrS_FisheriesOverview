@@ -108,6 +108,9 @@ write.taf(dat, file= "2019_BrS_FO_Figure4.csv", dir = "report")
 #~~~~~~~~~~~~~~~#
 # A. Trends by guild
 #~~~~~~~~~~~~~~~#
+
+unique(trends$FisheriesGuild)
+
 # 1. Demersal
 #~~~~~~~~~~~
 plot_stock_trends(trends, guild="demersal", cap_year = 2019, cap_month = "October", return_data = FALSE)
@@ -124,13 +127,24 @@ ggplot2::ggsave("2019_BrS_FO_Figure12c.png", path = "report/", width = 178, heig
 dat <- plot_stock_trends(trends, guild="pelagic", cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(dat,file ="2019_BrS_FO_Figure12c.csv", dir = "report")
 
-# 3. Benthic
+# 3. Crustacean
 #~~~~~~~~~~~
 plot_stock_trends(trends, guild="crustacean", cap_year = 2019, cap_month = "October",return_data = FALSE )
 ggplot2::ggsave("2019_BrS_FO_Figure12a.png", path = "report/", width = 178, height = 130, units = "mm", dpi = 300)
 
 dat <- plot_stock_trends(trends, guild="crustacean", cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(dat, file ="2019_BrS_FO_Figure12a.csv", dir = "report" )
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Ecosystem Overviews plot
+#~~~~~~~~~~~~~~~~~~~~~~~~~#
+guild <- read.taf("model/guild.csv")
+
+plot_guild_trends(guild, cap_year = 2019, cap_month = "October",return_data = FALSE )
+ggplot2::ggsave("2019_BrS_EO_GuildTrends.png", path = "report/", width = 178, height = 130, units = "mm", dpi = 300)
+
+dat <- plot_guild_trends(guild, cap_year = 2019, cap_month = "October",return_data = TRUE)
+write.taf(dat, file ="2019_BrS_EO_GuildTrends.csv", dir = "report" )
 
 
 #~~~~~~~~~~~~~~~#
@@ -144,9 +158,9 @@ write.taf(dat, file ="2019_BrS_FO_Figure12a.csv", dir = "report" )
 bar <- plot_CLD_bar(catch_current, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 
 # Cod.27.1-2 should be green according to official status
-catch_current$Status[which(catch_current$StockKeyLabel == "cod.27.1-2")] <- "GREEN"
+# catch_current$Status[which(catch_current$StockKeyLabel == "cod.27.1-2")] <- "GREEN"
 
-bar <- plot_CLD_bar(catch_current, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
+# bar <- plot_CLD_bar(catch_current, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 bar_dat <- plot_CLD_bar(catch_current, guild = "demersal", caption = T, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(bar_dat, file ="2019_BrS_FO_Figure13_demersal.csv", dir = "report" )
 
@@ -206,9 +220,6 @@ dev.off()
 #~~~~~~~~~~~
 bar <- plot_CLD_bar(catch_current, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 
-#remove ele
-# catch_current2 <- catch_current %>% filter(StockKeyLabel != "ele.2737.nea")
-# bar <- plot_CLD_bar(catch_current2, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = FALSE)
 
 bar_dat <- plot_CLD_bar(catch_current, guild = "All", caption = T, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(bar_dat, file ="2019_BrS_FO_Figure13_All.csv", dir = "report" )
@@ -260,6 +271,13 @@ dev.off()
 #~~~~~~~~~~~~~~~#
 
 plot_status_prop_pies(clean_status, "October", "2019")
+
+# will make qual_green just green
+clean_status2 <- clean_status 
+clean_status2$FishingPressure <- gsub("qual_GREEN", "GREEN", clean_status2$FishingPressure)
+
+plot_status_prop_pies(clean_status2, "October", "2019")
+
 ggplot2::ggsave("2019_BrS_FO_Figure10.png", path = "report/", width = 178, height = 178, units = "mm", dpi = 300)
 
 dat <- plot_status_prop_pies(clean_status, "October", "2019", return_data = TRUE)
