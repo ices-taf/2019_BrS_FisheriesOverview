@@ -45,7 +45,6 @@ clean_status <- format_sag_status(sag_status, 2019, "Barents Sea")
 
 Barents_stockList <- c("aru.27.123a4",
                        "cap.27.1-2",
-                       "cap.27.2a514",
                        "cod.27.1-2",
                        "cod.27.1-2coast",
                        "gfb.27.nea",
