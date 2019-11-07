@@ -241,19 +241,20 @@ dev.off()
 #~~~~~~~~~~~~~~~#
 discardsA <- plot_discard_trends(catch_trends, 2019, cap_year = 2019, cap_month = "October")
 
-# Most discards are of spurdog, which was not assessed in 2019,
-# will plot only elasmobranchs up to 2018
+# Most discards are of gfb.nea, which was not assessed in 2019,
+# will plot only this 
 
-catch_trends2 <- catch_trends %>% filter(FisheriesGuild == "elasmobranch")
+catch_trends2 <- catch_trends %>% filter(FisheriesGuild == "demersal")
 discardsA <- plot_discard_trends(catch_trends2, 2019, cap_year = 2019, cap_month = "October")
 
 dat <- plot_discard_trends(catch_trends2, 2019, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(dat, file ="2019_BrS_FO_Figure7_trends.csv", dir = "report" )
 
-discardsB <- plot_discard_current(catch_trends, 2019, cap_year = 2019, cap_month = "October")
+catch_trends2 <- catch_trends %>% filter(FisheriesGuild != "elasmobranch")
+discardsB <- plot_discard_current(catch_trends2, 2019, cap_year = 2019, cap_month = "October")
 # nothing comes out here, because no spurdog assessment
 
-dat <- discardsB <- plot_discard_current(catch_trends, 2019, cap_year = 2019, cap_month = "October", return_data = TRUE)
+dat <-  plot_discard_current(catch_trends, 2019, cap_year = 2019, cap_month = "October", return_data = TRUE)
 write.taf(dat, file ="2019_BrS_FO_Figure7_current.csv", dir = "report" )
 
 png("report/019_BrS_FO_Figure7.png",
