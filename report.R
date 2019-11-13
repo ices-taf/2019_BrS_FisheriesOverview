@@ -287,27 +287,24 @@ write.taf(dat, file= "2019_BrS_FO_Figure10.csv", dir = "report")
 #~~~~~~~~~~~~~~~#
 #E. GES pies
 #~~~~~~~~~~~~~~~#
-        #Need to change order and fix numbers
-        plot_GES_pies(clean_status2, catch_current, "October", "2019")
-        ggplot2::ggsave("2019_BrS_FO_Figure11.png", path = "report/", width = 178, height = 178, units = "mm", dpi = 300)
         
-        dat <- plot_GES_pies(clean_status2, catch_current, "October", "2019", return_data = TRUE)
-        write.taf(dat, file= "2019_BrS_FO_Figure11.csv", dir = "report")
+plot_GES_pies(clean_status2, catch_current, "October", "2019")
+ggplot2::ggsave("2019_BrS_FO_Figure11.png", path = "report/", width = 178, height = 178, units = "mm", dpi = 300)
         
-        #~~~~~~~~~~~~~~~#
-        #F. ANNEX TABLE 
-        #~~~~~~~~~~~~~~~#
-        doc <- format_annex_table(clean_status2, 2019, return_data = FALSE)
-        #can´t find the path
-        grey.path <- system.file("symbols", "grey_q.png", package = "icesFO")
-        red.path <- system.file("symbols", "red_cross.png", package = "icesFO")
-        green.path <- system.file("symbols", "green_check.png", package = "icesFO")
-        doc <- format_annex_table(clean_status2, 2019, return_data = TRUE)
-        write.csv(doc, file = "report/2019_BrS_FO_annex_table.csv")
-        # print(doc, target = "report/2019_BrS_FO_annex_table.docx")
+dat <- plot_GES_pies(clean_status2, catch_current, "October", "2019", return_data = TRUE)
+write.taf(dat, file= "2019_BrS_FO_Figure11.csv", dir = "report")
         
-        # dat <- format_annex_table(clean_status, 2019, return_data = TRUE)
-        
+#~~~~~~~~~~~~~~~#
+#F. ANNEX TABLE 
+#~~~~~~~~~~~~~~~#
+
+dat <- format_annex_table(clean_status, 2019)
+
+write.taf(dat, file = "2019_BtS_FO_annex_table.csv", dir = "report")
+
+# This annex table has to be edited by hand,
+# For SBL and GES only one values is reported, 
+# the one in PA for SBL and the one in MSY for GES 
 
 
 ###########
