@@ -149,7 +149,7 @@ ggplot2::ggsave("2019_BrS_EO_GuildTrends_short.png", path = "report/", width = 1
 guild3 <- guild %>% filter(FisheriesGuild != "MEAN")
 plot_guild_trends(guild3, cap_year = 2019, cap_month = "November",return_data = FALSE )
 ggplot2::ggsave("2019_BrS_EO_GuildTrends_noMEAN.png", path = "report/", width = 178, height = 130, units = "mm", dpi = 300)
-guild4 <- guild3 %>%filter(Year > 1978)
+guild4 <- guild3 %>%filter(Year > 1968)
 plot_guild_trends(guild4, cap_year = 2019, cap_month = "November",return_data = FALSE )
 ggplot2::ggsave("2019_BrS_EO_GuildTrends_short_noMEAN.png", path = "report/", width = 178, height = 130, units = "mm", dpi = 300)
 
