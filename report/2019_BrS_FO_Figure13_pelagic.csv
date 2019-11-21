@@ -1,0 +1,4 @@
+StockKeyLabel,FisheriesGuild,F_FMSY,catches,landings,discards,FMSY,F,AssessmentYear,Year,SSB_MSYBtrigger,SSB,MSYBtrigger,Status,total
+aru.27.123a4,pelagic,NA,NA,23859,NA,NA,NA,NA,NA,NA,NA,NA,GREY,195000
+cap.27.1-2,pelagic,NA,195000,195000,NA,NA,NA,2019,2019,NA,301615,NA,GREY,195000
+reb.27.1-2,pelagic,NA,31201,31201,NA,NA,0.039,2018,2018,2.58503174603175,814285,315000,GREY,195000
