@@ -346,12 +346,13 @@ effort <-
             `Demersal seine` = "Bottom seines"),
           mw_fishinghours = as.numeric(mw_fishinghours)
         ) %>%
-      filter(!is.na(mw_fishinghours))
+      dplyr::filter(!is.na(mw_fishinghours))
 
 # write layer
 write_layer <- function(dat, fname) {
   sf::write_sf(dat, paste0("report/", fname, ".shp"))
   files <- dir("report", pattern = fname, full = TRUE)
+  files <- files[tools::file_ext(files) != "png"]
   zip(paste0("report/", fname, ".zip"), files, extras = "-j")
   file.remove(files)
 }
